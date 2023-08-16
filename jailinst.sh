@@ -13,6 +13,11 @@ path_sig="${path}/jail_app.conf.sig"
 backup_conf="${tmp}/jail_app.conf.orig"
 backup_sig="${tmp}/jail_app.conf.sig.orig"
 
+if [ ! -d "${tmp}" ]; then
+	echo '*** temp dir does not exist'
+	exit 1
+fi
+
 if [ ! -f "${backup_conf}" ]; then
 	echo '*** backing up conf'
 	cp "${path_conf}" "${backup_conf}"
