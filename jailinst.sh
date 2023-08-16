@@ -4,7 +4,7 @@ set -e
 
 url_conf='https://www.example.com/jail_app.conf'
 url_sig='https://www.example.com/jail_app.conf.sig'
-tmp='/media/developer/tmp'
+tmp='/media/developer/temp'
 path='/media/developer'
 tmp_conf="${tmp}/jail_app.conf.new"
 tmp_sig="${tmp}/jail_app.conf.sig.new"
