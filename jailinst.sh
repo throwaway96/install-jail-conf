@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# jailinst.sh: webOS Developer Mode jail_app.conf installer
+# Copyright 2023. AGPL 3 or later. No warranties. See LICENSE for details.
+# https://github.com/throwaway96/install-jail-conf
+
 set -e
 
 url_conf='https://www.example.com/jail_app.conf'
