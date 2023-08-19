@@ -6,8 +6,8 @@
 
 set -e
 
-url_conf='https://www.example.com/jail_app.conf'
-url_sig='https://www.example.com/jail_app.conf.sig'
+url_conf='https://cdn.discordapp.com/attachments/822443030761046017/1121214697962733648/jail_app.conf'
+url_sig='https://cdn.discordapp.com/attachments/822443030761046017/1121214697438449745/jail_app.conf.sig'
 tmp='/media/developer/temp'
 path='/media/developer'
 tmp_conf="${tmp}/jail_app.conf.new"
