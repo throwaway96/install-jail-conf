@@ -10,7 +10,7 @@ This script will download, verify, and install
 
 1. Replace URLs in script with valid ones. Make sure your editor preserves the
    LF line endings.
-2. Upload `jailinst.sh` to your TV.
+2. Upload `jailinst.sh` to your TV. Put it somewhere writable, like `/tmp` or `/media/developer/temp`.
 3. Run `jailinst.sh` on the TV. (Either use `sh jailinst.sh` or make it executable and use
    e.g. `./jailinst.sh`.)
 4. If verification was successful, reboot the TV for the new configuration to
