@@ -1,19 +1,28 @@
-# `jail_app.conf` Installer
+# `jail_app.conf` Patcher
 
-**NOTE:** You'll have to provide your own URLs for `jail_app.conf` and
-`jail_app.conf.sig`.
+This script will patch the current `jail_app.conf`/`jail_app.conf.sig` to
+generate a crashd-compatible version.
 
-This script will download, verify, and install
-`jail_app.conf`/`jail_app.conf.sig`.
+## Warning
+
+Note that while the configuration that it generates will work for the crashd
+exploit, it will not necessarily be appropriate for your webOS version. This may
+cause issues if you intend to use other Developer Mode functionality. The script
+backs up the original `jail_app.conf` and `jail_app.conf.sig`, which you can
+restore to `/media/developer` manually. Disabling and re-enabling Developer Mode
+should also cause the latest configuration to be downloaded from LG.
 
 ## How-to
 
-1. Replace URLs in script with valid ones. Make sure your editor preserves the
-   LF line endings.
-2. Upload `jailinst.sh` to your TV. Put it somewhere writable, like `/tmp` or `/media/developer/temp`.
-3. Run `jailinst.sh` on the TV. (Either use `sh jailinst.sh` or make it executable and use
-   e.g. `./jailinst.sh`.)
-4. If verification was successful, reboot the TV for the new configuration to
+1. Download `jailpatch.sh` to your TV:
+    ```
+    curl -L -o /tmp/jailpatch.sh https://raw.githubusercontent.com/throwaway96/install-jail-conf/main/jailpatch.sh
+    ```
+2. Run `jailpatch.sh` on the TV:
+    ```
+    sh /tmp/jailpatch.sh
+    ```
+3. If verification was successful, reboot the TV for the new configuration to
    take effect.
 
 ## License
