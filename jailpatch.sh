@@ -42,6 +42,17 @@ check_files() {
     fi
 }
 
+check_writable() {
+    if [ ! -f "${path_conf}" ]; then
+        echo "*** error: jail_app.conf (${path_conf}) not writable"
+	echo "*** you probably didn't reboot"
+        exit 1
+    elif [ ! -f "${path_sig}" ]; then
+        echo "*** error: jail_app.conf.sig (${path_sig}) not writable"
+	exit 1
+    fi
+}
+
 check_sdkversion() {
     ver="$(get_sdkversion)"
 
@@ -205,6 +216,14 @@ jhash="$(hash_md5 "${path_conf}")"
 
 echo "*** current hash: ${jhash}"
 
+if [ "${jhash}" == "${md5_t}" ]; then
+    echo "*** correct jail_app.conf already present. not patching."
+    check_current
+    exit 0
+fi
+
+check_writable
+
 case "${jhash}" in
 "${md5_4}")
     echo "*** found version 4, patching..."
@@ -221,11 +240,6 @@ case "${jhash}" in
 "${md5_7}")
     echo "*** found version 7, patching..."
     patch "${sed7}"
-    ;;
-"${md5_t}")
-    echo "*** correct jail_app.conf already present. not patching."
-    check_current
-    exit 0
     ;;
 *)
     echo "*** error: unknown version. please save your jail_app.conf and jail_app.conf.sig and seek support"
