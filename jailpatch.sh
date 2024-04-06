@@ -45,7 +45,8 @@ check_files() {
 check_writable() {
     if [ ! -w "${path_conf}" ]; then
         echo "*** error: jail_app.conf (${path_conf}) not writable"
-        echo "*** you probably didn't reboot"
+        echo "*** your Dev Mode app is probably patched; see https://gist.github.com/throwaway96/e811b0f7cc2a705a5a476a8dfa45e09f#service-20240402"
+        echo "*** if it's not, then you didn't reboot properly"
         exit 1
     elif [ ! -w "${path_sig}" ]; then
         echo "*** error: jail_app.conf.sig (${path_sig}) not writable"
