@@ -45,8 +45,12 @@ check_files() {
 check_writable() {
     if [ ! -w "${path_conf}" ]; then
         echo "*** error: jail_app.conf (${path_conf}) not writable"
-        echo "*** your Dev Mode app is probably patched; see https://gist.github.com/throwaway96/e811b0f7cc2a705a5a476a8dfa45e09f#service-20240402"
-        echo "*** if it's not, then you didn't reboot properly"
+        if find_devmode_app_patch; then
+            echo "*** your Dev Mode app is patched; see https://gist.github.com/throwaway96/e811b0f7cc2a705a5a476a8dfa45e09f#service-20240402"
+        else
+            echo '*** your Dev Mode app does not appear to be patched... lucky you'
+            echo "*** you probably just didn't reboot properly"
+        fi
         exit 1
     elif [ ! -w "${path_sig}" ]; then
         echo "*** error: jail_app.conf.sig (${path_sig}) not writable"
@@ -88,6 +92,20 @@ backup_files() {
     	cp "${path_sig}" "${backup_sig}"
     else
         echo '*** jail_app.conf.sig backup already exists'
+    fi
+}
+
+find_devmode_app_patch() {
+    fgrep -e 'cp -pf ${DEVMODE_SERVICE_DIR}/download/jail_app.conf ${DEVELOPER_HOME}' -- '/media/cryptofs/apps/usr/palm/services/com.palmdts.devmode.service/start-devmode.sh'
+}
+
+check_devmode_app_patch() {
+    if [ ! -r '/media/cryptofs/apps/usr/palm/services/com.palmdts.devmode.service/start-devmode.sh' ]; then
+        echo '*** unable to check whether Dev Mode app is patched because start-devmode.sh is not accessible...'
+    elif find_devmode_app_patch; then
+        echo '*** WARNING: your Dev Mode app appears to be patched!'
+        echo '*** >>> this is probably not going to work <<<'
+        echo '*** for more information, see https://gist.github.com/throwaway96/e811b0f7cc2a705a5a476a8dfa45e09f#service-20240402'
     fi
 }
 
@@ -207,6 +225,7 @@ patch() {
 echo '****** jailpatch.sh from https://github.com/throwaway96/install-jail-conf'
 echo '*** for instructions, see https://gist.github.com/throwaway96/e811b0f7cc2a705a5a476a8dfa45e09f'
 
+check_devmode_app_patch
 check_tmp
 check_files
 check_sdkversion
